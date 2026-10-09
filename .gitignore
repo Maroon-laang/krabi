@@ -1,0 +1,12 @@
+# Vercel
+.vercel
+
+# Dependencies (none now, but just in case)
+node_modules
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local
