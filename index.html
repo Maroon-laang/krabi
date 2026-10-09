@@ -490,6 +490,41 @@
             padding: 0 0.5rem;
         }
 
+        .cart-empty {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+        }
+
+        .cart-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .cart-empty-text {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .cart-empty-btn {
+            background: linear-gradient(135deg, var(--primary-color), #6a0dad);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transition: transform 0.2s;
+        }
+
+        .cart-empty-btn:hover {
+            transform: translateY(-2px);
+        }
+
         .cart-footer {
             padding: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1331,7 +1366,11 @@
             <button class="close-cart" onclick="toggleCart()">✕</button>
         </div>
         <div class="cart-items" id="cartItems">
-            <p style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">Your cart is empty</p>
+            <div class="cart-empty">
+                <div class="cart-empty-icon">🛒</div>
+                <p class="cart-empty-text">Your cart is empty</p>
+                <button class="cart-empty-btn" onclick="goToCatalog()">Browse products</button>
+            </div>
         </div>
         <div class="cart-footer">
             <div class="cart-delivery"><span>Delivery:</span><span>300 THB</span></div>
@@ -1570,7 +1609,12 @@
 
             const cartItemsEl = document.getElementById('cartItems');
             if (cart.length === 0) {
-                cartItemsEl.innerHTML = `<p style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">Your cart is empty</p>`;
+                cartItemsEl.innerHTML = `
+                    <div class="cart-empty">
+                        <div class="cart-empty-icon">🛒</div>
+                        <p class="cart-empty-text">Your cart is empty</p>
+                        <button class="cart-empty-btn" onclick="goToCatalog()">Browse products</button>
+                    </div>`;
             } else {
                 cartItemsEl.innerHTML = cart.map(item => `
                     <div class="cart-item">
@@ -1628,8 +1672,13 @@
             forceOpen ? sidebar.classList.add('open') : sidebar.classList.toggle('open');
         }
 
+        function goToCatalog() {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function openCheckoutModal() {
-            if (cart.length === 0) { alert('Your cart is empty!'); return; }
+            if (cart.length === 0) { return; }
             renderOrderSummary();
             document.getElementById('checkoutModal').classList.remove('hidden');
             toggleCart(false);
