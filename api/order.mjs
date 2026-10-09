@@ -35,8 +35,7 @@ export default async function handler(req, res) {
         const data = await tgResp.json();
         if (!data.ok) {
             console.error('Telegram API error:', data.description);
-            // TEMP DEBUG: surface Telegram's reason — remove after diagnosing
-            return res.status(502).json({ ok: false, error: 'Telegram rejected the message', detail: data.description, code: data.error_code });
+            return res.status(502).json({ ok: false, error: 'Telegram rejected the message' });
         }
         return res.status(200).json({ ok: true });
     } catch (e) {
