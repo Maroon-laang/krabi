@@ -17,14 +17,14 @@
     <meta name="geo.position" content="8.0863;98.9863">
 
     <link rel="alternate" hreflang="en" href="https://www.vapebaza.com/" />
-    <link rel="alternate" hreflang="ru" href="https://www.vapebaza.com/ru.html" />
-    <link rel="canonical" href="https://www.vapebaza.com/ru.html" />
+    <link rel="alternate" hreflang="ru" href="https://www.vapebaza.com/ru" />
+    <link rel="canonical" href="https://www.vapebaza.com/ru" />
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Вейпы в Краби с доставкой от 1 400 THB">
     <meta property="og:description"
         content="Купить вейпы в Краби с быстрой доставкой. Онлайн заказ, поддержка на русском и английском">
-    <meta property="og:url" content="https://www.vapebaza.com/ru.html">
+    <meta property="og:url" content="https://www.vapebaza.com/ru">
     <meta property="og:locale" content="ru_RU">
 
     <link rel="icon" type="image/svg+xml"
@@ -1084,6 +1084,22 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem 2.5rem;
+            }
+
+            .catalog {
+                padding: 2.5rem 1rem;
+            }
+
+            footer {
+                padding: 2.5rem 1rem;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
@@ -1103,7 +1119,8 @@
             }
 
             .seo-block {
-                padding: 2rem 1.5rem;
+                padding: 2rem 1.25rem;
+                margin: 2.5rem auto;
             }
 
             .seo-block h2 {
@@ -1112,6 +1129,7 @@
 
             .products-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
             }
 
             .product-image-wrapper {
@@ -1223,7 +1241,7 @@
                 style="font-size:0.5em; color:var(--text-secondary); font-weight:400; vertical-align: middle;">KRABI</small>
         </div>
         <div class="nav-controls">
-            <a href="index.html" class="lang-switch">EN</a>
+            <a href="/" class="lang-switch">EN</a>
             <button class="cart-btn" onclick="toggleCart()">🛒 <span id="cartCount">0</span></button>
         </div>
     </header>

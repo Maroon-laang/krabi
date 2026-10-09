@@ -17,7 +17,7 @@
     <meta name="geo.position" content="8.0863;98.9863">
 
     <link rel="alternate" hreflang="en" href="https://www.vapebaza.com/" />
-    <link rel="alternate" hreflang="ru" href="https://www.vapebaza.com/ru.html" />
+    <link rel="alternate" hreflang="ru" href="https://www.vapebaza.com/ru" />
     <link rel="canonical" href="https://www.vapebaza.com/" />
 
     <meta property="og:type" content="website">
@@ -1109,6 +1109,22 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem 2.5rem;
+            }
+
+            .catalog {
+                padding: 2.5rem 1rem;
+            }
+
+            footer {
+                padding: 2.5rem 1rem;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
@@ -1128,7 +1144,8 @@
             }
 
             .seo-block {
-                padding: 2rem 1.5rem;
+                padding: 2rem 1.25rem;
+                margin: 2.5rem auto;
             }
 
             .seo-block h2 {
@@ -1137,6 +1154,7 @@
 
             .products-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
             }
 
             .product-image-wrapper {
@@ -1249,7 +1267,7 @@
                 style="font-size:0.5em; color:var(--text-secondary); font-weight:400; vertical-align: middle;">KRABI</small>
         </div>
         <div class="nav-controls">
-            <a href="ru.html" class="lang-switch">RU</a>
+            <a href="/ru" class="lang-switch">RU</a>
             <button class="cart-btn" onclick="toggleCart()">
                 <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
