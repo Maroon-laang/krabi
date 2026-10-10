@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Заявки — Vapebaza</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+    <style>
+        :root {
+            --bg-color: #0f0f13;
+            --surface-color: #1a1a20;
+            --primary-color: #8a2be2;
+            --primary-glow: rgba(138, 43, 226, 0.3);
+            --secondary-color: #00e5ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent-color: #ff4081;
+            --whatsapp-color: #25D366;
+            --telegram-color: #0088cc;
+            --ok-color: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem 4rem;
+        }
+
+        /* Login */
+        .login {
+            max-width: 360px;
+            margin: 15vh auto 0;
+            background: var(--surface-color);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .login h1 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .login p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login input {
+            width: 100%;
+            padding: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 1rem;
+        }
+
+        .login input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), #6a0dad);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .err {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            min-height: 1.2em;
+        }
+
+        /* Header */
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .top h1 {
+            font-size: 1.5rem;
+        }
+
+        .top h1 .count {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-left: 0.4rem;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 0.45rem 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .chip.active {
+            border-color: var(--primary-color);
+            color: var(--text-primary);
+            background: rgba(138, 43, 226, 0.2);
+        }
+
+        /* Order cards */
+        .order {
+            background: var(--surface-color);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .order.handled {
+            opacity: 0.68;
+        }
+
+        .order-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .order-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .badge.new {
+            background: rgba(255, 64, 129, 0.18);
+            color: var(--accent-color);
+        }
+
+        .badge.handled {
+            background: rgba(46, 204, 113, 0.18);
+            color: var(--ok-color);
+        }
+
+        .order-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .row {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-secondary);
+        }
+
+        .row .lbl {
+            min-width: 92px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .row .val {
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .row a.val {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .row a.val:hover {
+            text-decoration: underline;
+        }
+
+        .items {
+            margin: 0.5rem 0;
+            padding: 0.6rem 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.88rem;
+        }
+
+        .items .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.15rem 0;
+        }
+
+        .total {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.05rem;
+            margin-top: 0.4rem;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 0.9rem;
+            font-size: 0.82rem;
+            border-radius: 7px;
+        }
+
+        .btn-ok {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--ok-color);
+            border: 1px solid rgba(46, 204, 113, 0.4);
+        }
+
+        .btn-ok:hover {
+            background: rgba(46, 204, 113, 0.25);
+        }
+
+        .btn-del {
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid rgba(255, 64, 129, 0.4);
+        }
+
+        .btn-del:hover {
+            background: rgba(255, 64, 129, 0.12);
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 3rem 1rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login -->
+    <div id="loginView" class="login">
+        <h1>📋 Заявки</h1>
+        <p>Введите пароль для доступа</p>
+        <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password">
+        <button class="btn btn-full" id="loginBtn" onclick="login()">Войти</button>
+        <div class="err" id="loginErr"></div>
+    </div>
+
+    <!-- App -->
+    <div id="appView" class="wrap hidden">
+        <div class="top">
+            <h1>Заявки <span class="count" id="count"></span></h1>
+            <div class="top-actions">
+                <button class="btn btn-ghost btn-sm" onclick="loadOrders()">↻ Обновить</button>
+                <button class="btn btn-ghost btn-sm" onclick="logout()">Выйти</button>
+            </div>
+        </div>
+        <div class="filters">
+            <div class="chip active" data-filter="all" onclick="setFilter('all')">Все</div>
+            <div class="chip" data-filter="new" onclick="setFilter('new')">Новые</div>
+            <div class="chip" data-filter="handled" onclick="setFilter('handled')">Обработанные</div>
+        </div>
+        <div id="list"></div>
+    </div>
+
+    <script>
+        let orders = [];
+        let filter = 'all';
+
+        const getKey = () => sessionStorage.getItem('adminKey') || '';
+        const setKey = (k) => sessionStorage.setItem('adminKey', k);
+        const clearKey = () => sessionStorage.removeItem('adminKey');
+
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        async function api(method, body) {
+            const opts = {
+                method,
+                headers: { 'x-admin-key': getKey() },
+            };
+            if (body) {
+                opts.headers['Content-Type'] = 'application/json';
+                opts.body = JSON.stringify(body);
+            }
+            const res = await fetch('/api/orders', opts);
+            if (res.status === 401) { throw new Error('unauthorized'); }
+            return res.json();
+        }
+
+        async function login() {
+            const btn = document.getElementById('loginBtn');
+            const errEl = document.getElementById('loginErr');
+            const pass = document.getElementById('pass').value.trim();
+            if (!pass) return;
+            errEl.textContent = '';
+            btn.disabled = true;
+            setKey(pass);
+            try {
+                const data = await api('GET');
+                if (data.ok) {
+                    orders = data.orders || [];
+                    showApp();
+                    render();
+                } else {
+                    throw new Error(data.error || 'Ошибка');
+                }
+            } catch (e) {
+                clearKey();
+                errEl.textContent = e.message === 'unauthorized' ? 'Неверный пароль' : ('Ошибка: ' + e.message);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function logout() {
+            clearKey();
+            orders = [];
+            document.getElementById('appView').classList.add('hidden');
+            document.getElementById('loginView').classList.remove('hidden');
+            document.getElementById('pass').value = '';
+        }
+
+        function showApp() {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('appView').classList.remove('hidden');
+        }
+
+        async function loadOrders() {
+            try {
+                const data = await api('GET');
+                if (data.ok) { orders = data.orders || []; render(); }
+            } catch (e) {
+                if (e.message === 'unauthorized') logout();
+            }
+        }
+
+        function setFilter(f) {
+            filter = f;
+            document.querySelectorAll('.chip').forEach((c) => {
+                c.classList.toggle('active', c.dataset.filter === f);
+            });
+            render();
+        }
+
+        function contactHtml(o) {
+            const label = (o.contactLabel || '').toLowerCase();
+            const val = o.contact || '';
+            if (label.includes('telegram')) {
+                const uname = val.replace(/^@/, '');
+                return `<a class="val" href="https://t.me/${encodeURIComponent(uname)}" target="_blank" rel="noopener">${esc(val)}</a>`;
+            }
+            // WhatsApp / phone
+            const digits = val.replace(/\D/g, '');
+            if (digits.length >= 8) {
+                return `<a class="val" href="https://wa.me/${digits}" target="_blank" rel="noopener">${esc(val)}</a>`;
+            }
+            return `<span class="val">${esc(val)}</span>`;
+        }
+
+        function fmtDate(ts) {
+            try {
+                return new Date(Number(ts)).toLocaleString('ru-RU', {
+                    day: '2-digit', month: '2-digit', year: '2-digit',
+                    hour: '2-digit', minute: '2-digit',
+                });
+            } catch { return ''; }
+        }
+
+        function render() {
+            const list = document.getElementById('list');
+            const shown = orders.filter((o) => filter === 'all' ? true : (o.status || 'new') === filter);
+
+            const newCount = orders.filter((o) => (o.status || 'new') === 'new').length;
+            document.getElementById('count').textContent = `(${newCount} новых / ${orders.length} всего)`;
+
+            if (shown.length === 0) {
+                list.innerHTML = `<div class="empty">Заявок нет</div>`;
+                return;
+            }
+
+            list.innerHTML = shown.map((o) => {
+                const status = o.status || 'new';
+                const items = (o.items || []).map((i) =>
+                    `<div class="item"><span>${esc(i.name)} × ${Number(i.qty) || 0}</span><span>${Number(i.sum) || 0} THB</span></div>`
+                ).join('');
+                const commentRow = o.comment
+                    ? `<div class="row"><span class="lbl">Комментарий</span><span class="val">${esc(o.comment)}</span></div>` : '';
+                return `
+                <div class="order ${status}">
+                    <div class="order-head">
+                        <span class="order-date">${esc(fmtDate(o.ts))}</span>
+                        <span class="badge ${status}">${status === 'handled' ? 'Обработана' : 'Новая'}</span>
+                    </div>
+                    <div class="order-name">${esc(o.name) || '—'}</div>
+                    <div class="row"><span class="lbl">${esc(o.contactLabel || 'Контакт')}</span>${contactHtml(o)}</div>
+                    <div class="row"><span class="lbl">Адрес</span><span class="val">${esc(o.address)}</span></div>
+                    <div class="row"><span class="lbl">Оплата</span><span class="val">${esc(o.payment)}</span></div>
+                    ${commentRow}
+                    <div class="items">${items}</div>
+                    <div class="total">Итого: ${Number(o.total) || 0} THB</div>
+                    <div class="order-actions">
+                        ${status === 'new'
+                            ? `<button class="btn btn-sm btn-ok" onclick="setStatus('${o.id}','handled')">✓ Обработана</button>`
+                            : `<button class="btn btn-sm btn-ghost" onclick="setStatus('${o.id}','new')">↩ В новые</button>`}
+                        <button class="btn btn-sm btn-del" onclick="del('${o.id}')">Удалить</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        async function setStatus(id, status) {
+            const o = orders.find((x) => x.id === id);
+            if (o) o.status = status; // optimistic
+            render();
+            try {
+                await api('POST', { action: 'status', id, status });
+            } catch (e) {
+                if (e.message === 'unauthorized') logout(); else loadOrders();
+            }
+        }
+
+        async function del(id) {
+            if (!confirm('Удалить заявку?')) return;
+            orders = orders.filter((x) => x.id !== id); // optimistic
+            render();
+            try {
+                await api('POST', { action: 'delete', id });
+            } catch (e) {
+                if (e.message === 'unauthorized') logout(); else loadOrders();
+            }
+        }
+
+        // Enter key on password
+        document.getElementById('pass').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') login();
+        });
+
+        // Auto-login if key already in session
+        if (getKey()) {
+            showApp();
+            loadOrders();
+        }
+    </script>
+</body>
+
+</html>
