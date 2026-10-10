@@ -8,7 +8,7 @@
 
     <title>Вейпы в Краби с доставкой от 1 400 THB</title>
     <meta name="description"
-        content="Купить вейпы в Краби с быстрой доставкой. Онлайн заказ, поддержка на русском и английском">
+        content="Купить вейпы в Краби с доставкой. Онлайн заказ.">
     <meta name="keywords"
         content="купить вейп Краби, вейп с доставкой Краби, цена вейп Краби, заказать вейп Краби, вейп магазин Краби, одноразовый вейп Краби, Marbo 10K Краби, вейп 1400 бат">
     <meta name="robots" content="index, follow">
@@ -23,7 +23,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Вейпы в Краби с доставкой от 1 400 THB">
     <meta property="og:description"
-        content="Купить вейпы в Краби с быстрой доставкой. Онлайн заказ, поддержка на русском и английском">
+        content="Купить вейпы в Краби с доставкой. Онлайн заказ.">
     <meta property="og:url" content="https://www.vapebaza.com/ru">
     <meta property="og:locale" content="ru_RU">
 
@@ -613,7 +613,7 @@
         }
 
         .modal-image-wrapper {
-            aspect-ratio: 1 / 1;
+            aspect-ratio: 4 / 3;
             background: linear-gradient(135deg, #252530, #1a1a20);
             display: flex;
             align-items: center;
@@ -628,7 +628,15 @@
         }
 
         .modal-info {
-            padding: 1.5rem;
+            padding: 1.25rem;
+        }
+
+        .modal-order-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 0.6rem;
+            margin-bottom: 0.25rem;
         }
 
         .modal-info .product-brand {
@@ -647,34 +655,41 @@
         }
 
         .modal-info .product-desc {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
+            margin-bottom: 1rem;
+            line-height: 1.45;
         }
 
         .details-content {
             background: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
+            padding: 0.85rem;
             border-radius: 8px;
-            margin-bottom: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .details-content p {
+            font-size: 0.82rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
         }
 
         .details-content h4 {
             color: var(--secondary-color);
-            margin: 0.8rem 0 0.4rem;
-            font-size: 0.95rem;
+            margin: 0.6rem 0 0.25rem;
+            font-size: 0.85rem;
         }
 
         .details-content ul {
-            margin-left: 1.2rem;
-            margin-bottom: 0.8rem;
+            margin-left: 1.1rem;
+            margin-bottom: 0.6rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.82rem;
         }
 
         .details-content li {
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
 
         .details-badge {
@@ -1202,7 +1217,6 @@
                 <div class="product-brand">Marbo Bar 10K</div>
                 <h2 id="modalTitle"></h2>
                 <p id="modalDesc" class="product-desc"></p>
-                <div class="details-content" id="modalSpecs"></div>
                 <div class="price-qty-row">
                     <div class="product-price" id="modalPrice"></div>
                     <div class="qty-selector">
@@ -1212,6 +1226,8 @@
                     </div>
                 </div>
                 <button class="add-to-cart-modal" onclick="addToCartFromModal()">В корзину</button>
+                <p class="modal-order-note">Оформите заказ — менеджер свяжется с вами в ближайшее время</p>
+                <div class="details-content" id="modalSpecs"></div>
             </div>
         </div>
     </div>
@@ -1282,15 +1298,13 @@
     </header>
 
     <section class="hero">
-        <h1>Вейпы в Краби с быстрой доставкой</h1>
+        <h1>Вейпы в Краби с доставкой</h1>
         <div class="price-tag">От 1 400 ฿</div>
-        <p>Закажите онлайн и получите вейп в отеле, на вилле или в квартире в любой точке Краби. Доставка в день заказа,
-            поддержка на русском и английском.</p>
+        <p>Закажите онлайн и получите вейп в отеле, на вилле или в квартире в любой точке Краби.</p>
         <div class="features-banner">
-            <div class="feature-item">🚚 Доставка за 1 час</div>
+            <div class="feature-item">🚚 Доставка примерно за 1 час</div>
             <div class="feature-item">🕒 Ежедневно 12:00 – 00:00</div>
             <div class="feature-item">💳 Наличные / Карта / Крипто</div>
-            <div class="feature-item">🌐 Поддержка EN / RU</div>
         </div>
     </section>
 
