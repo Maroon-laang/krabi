@@ -21,6 +21,7 @@ const T = {
         menuRegion: '📍 Change region',
         menuLang: '🌐 Language',
         catalogTitle: '🛍 <b>Choose a flavor:</b>',
+        chooseModel: '🛍 <b>Choose a model:</b>',
         back: '⬅ Back',
         backCatalog: '⬅ Back to catalog',
         addToCart: '➕ Add to cart',
@@ -62,6 +63,7 @@ const T = {
         menuRegion: '📍 Сменить регион',
         menuLang: '🌐 Язык',
         catalogTitle: '🛍 <b>Выберите вкус:</b>',
+        chooseModel: '🛍 <b>Выберите модель:</b>',
         back: '⬅ Назад',
         backCatalog: '⬅ К каталогу',
         addToCart: '➕ В корзину',
@@ -103,6 +105,7 @@ const T = {
         menuRegion: '📍 Region ändern',
         menuLang: '🌐 Sprache',
         catalogTitle: '🛍 <b>Geschmack wählen:</b>',
+        chooseModel: '🛍 <b>Modell wählen:</b>',
         back: '⬅ Zurück',
         backCatalog: '⬅ Zum Katalog',
         addToCart: '➕ In den Warenkorb',
@@ -144,6 +147,7 @@ const T = {
         menuRegion: '📍 更换地区',
         menuLang: '🌐 语言',
         catalogTitle: '🛍 <b>选择口味：</b>',
+        chooseModel: '🛍 <b>选择型号：</b>',
         back: '⬅ 返回',
         backCatalog: '⬅ 返回目录',
         addToCart: '➕ 加入购物车',
@@ -357,7 +361,8 @@ async function showCatalog(chatId, state, msgId) {
         }]);
     }
     rows.push([{ text: `${t.menuCart} (${cartCount(state.cart)})`, callback_data: 'cart' }, { text: t.back, callback_data: 'menu' }]);
-    const params = { chat_id: chatId, text: t.catalogTitle, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } };
+    const title = region.groups ? t.chooseModel : t.catalogTitle;
+    const params = { chat_id: chatId, text: title, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } };
     if (msgId) {
         const r = await tg('editMessageText', { ...params, message_id: msgId });
         if (!r.ok) await tg('sendMessage', params);
