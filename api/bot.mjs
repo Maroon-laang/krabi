@@ -105,6 +105,46 @@ async function tg(method, params) {
     return res.json();
 }
 
+// ---------- bot presentation (description shown before START, About, commands) ----------
+const BOT_DESC = {
+    en: '🛒 Vapebaza — vape delivery in Krabi (and more regions).\nOrder online and get your vape in about 1 hour — to your hotel, villa or apartment. Payment on delivery: cash, card or crypto.\n\nTap START to choose your region and flavors. 18+',
+    ru: '🛒 Vapebaza — доставка вейпов в Краби (и другие регионы).\nЗакажите онлайн и получите вейп примерно за 1 час — в отель, на виллу или в квартиру. Оплата при получении: наличные, карта или крипто.\n\nНажмите СТАРТ, чтобы выбрать регион и вкусы. 18+',
+};
+const BOT_SHORT = {
+    en: 'Vape delivery 🛵 Order right here in the bot. 18+',
+    ru: 'Доставка вейпов 🛵 Заказ прямо в боте. 18+',
+};
+const BOT_CMDS = {
+    en: [
+        { command: 'start', description: 'Open the shop' },
+        { command: 'menu', description: 'Main menu' },
+        { command: 'help', description: 'How to order' },
+    ],
+    ru: [
+        { command: 'start', description: 'Открыть магазин' },
+        { command: 'menu', description: 'Главное меню' },
+        { command: 'help', description: 'Как заказать' },
+    ],
+};
+const HELP = {
+    en: '🛍 <b>How to order</b>\n1) Choose language and region\n2) Open <b>Catalog</b> and add flavors to cart\n3) Open <b>Cart</b> → <b>Checkout</b>\n4) Enter your name, contact, address and payment\n5) Confirm — a manager will contact you shortly.\n\n/start — open the shop',
+    ru: '🛍 <b>Как заказать</b>\n1) Выберите язык и регион\n2) Откройте <b>Каталог</b> и добавьте вкусы в корзину\n3) Откройте <b>Корзину</b> → <b>Оформить заказ</b>\n4) Укажите имя, контакт, адрес и оплату\n5) Подтвердите — менеджер свяжется с вами.\n\n/start — открыть магазин',
+};
+
+function isOperator(chatId) {
+    return regionList().map((r) => String(r.operatorChatId)).includes(String(chatId));
+}
+
+async function configureBot() {
+    await tg('setMyDescription', { description: BOT_DESC.en });
+    await tg('setMyDescription', { description: BOT_DESC.ru, language_code: 'ru' });
+    await tg('setMyShortDescription', { short_description: BOT_SHORT.en });
+    await tg('setMyShortDescription', { short_description: BOT_SHORT.ru, language_code: 'ru' });
+    await tg('setMyCommands', { commands: BOT_CMDS.en });
+    await tg('setMyCommands', { commands: BOT_CMDS.ru, language_code: 'ru' });
+    await tg('setChatMenuButton', { menu_button: { type: 'commands' } });
+}
+
 // ---------- state ----------
 const DEFAULT_STATE = () => ({ lang: null, region: null, cart: {}, step: null, draft: {} });
 
@@ -152,9 +192,15 @@ function mainMenuKb(t) {
 }
 
 async function showLangChoice(chatId) {
+    const welcome =
+        '🛒 <b>Vapebaza</b> — vape delivery / доставка вейпов\n' +
+        'Fast delivery to your hotel, villa or apartment. 18+\n' +
+        'Быстрая доставка в отель, на виллу или в квартиру. 18+\n\n' +
+        `${T.en.chooseLang}\n${T.ru.chooseLang}`;
     await tg('sendMessage', {
         chat_id: chatId,
-        text: `${T.en.chooseLang}\n${T.ru.chooseLang}`,
+        text: welcome,
+        parse_mode: 'HTML',
         reply_markup: { inline_keyboard: [[{ text: 'English 🇬🇧', callback_data: 'lang:en' }, { text: 'Русский 🇷🇺', callback_data: 'lang:ru' }]] },
     });
 }
@@ -350,6 +396,19 @@ async function onMessage(msg) {
     const chatId = msg.chat.id;
     const text = (msg.text || '').trim();
     const state = await loadState(chatId);
+
+    if (text === '/setup') {
+        if (isOperator(chatId)) {
+            await configureBot().catch((e) => console.error('configureBot', e));
+            return tg('sendMessage', { chat_id: chatId, text: '✅ Бот оформлен: описание (видно рядом с кнопкой START), About и меню команд обновлены.\nОткройте профиль бота, чтобы проверить.' });
+        }
+        return tg('sendMessage', { chat_id: chatId, text: 'Команда доступна только оператору.' });
+    }
+
+    if (text === '/help') {
+        const lang = state.lang || 'en';
+        return tg('sendMessage', { chat_id: chatId, text: HELP[lang], parse_mode: 'HTML' });
+    }
 
     if (text === '/start' || text === '/menu') {
         state.step = null;
