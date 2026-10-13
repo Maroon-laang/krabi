@@ -11,6 +11,7 @@ const API = TOKEN ? `https://api.telegram.org/bot${TOKEN}` : null;
 
 const T = {
     en: {
+        brand: '🛒 <b>Vapebaza</b> — vape delivery. 18+',
         chooseLang: '🌐 Please choose your language:',
         welcome: (r) => `Welcome! Region: <b>${r}</b>\nWhat would you like to do?`,
         chooseRegion: '📍 Choose your region:',
@@ -51,6 +52,7 @@ const T = {
         qty: 'Qty',
     },
     ru: {
+        brand: '🛒 <b>Vapebaza</b> — доставка вейпов. 18+',
         chooseLang: '🌐 Выберите язык:',
         welcome: (r) => `Добро пожаловать! Регион: <b>${r}</b>\nЧто хотите сделать?`,
         chooseRegion: '📍 Выберите регион:',
@@ -90,6 +92,88 @@ const T = {
         startOver: 'Используйте меню ниже 👇',
         qty: 'Кол-во',
     },
+    de: {
+        brand: '🛒 <b>Vapebaza</b> — Vape-Lieferung. 18+',
+        chooseLang: '🌐 Bitte wählen Sie Ihre Sprache:',
+        welcome: (r) => `Willkommen! Region: <b>${r}</b>\nWas möchten Sie tun?`,
+        chooseRegion: '📍 Wählen Sie Ihre Region:',
+        menuCatalog: '🛍 Katalog',
+        menuCart: '🛒 Warenkorb',
+        menuRegion: '📍 Region ändern',
+        menuLang: '🌐 Sprache',
+        catalogTitle: '🛍 <b>Geschmack wählen:</b>',
+        back: '⬅ Zurück',
+        backCatalog: '⬅ Zum Katalog',
+        addToCart: '➕ In den Warenkorb',
+        added: 'Hinzugefügt ✓',
+        goToCart: '🛒 Zum Warenkorb',
+        cartTitle: '🛒 <b>Ihr Warenkorb:</b>',
+        emptyCart: '🛒 Ihr Warenkorb ist leer.',
+        remove: '🗑',
+        delivery: 'Lieferung',
+        total: 'Gesamt',
+        checkout: '✅ Zur Kasse',
+        askName: '👤 Bitte geben Sie Ihren Namen ein:',
+        askContactMethod: '📱 Wie sollen wir Sie kontaktieren?',
+        whatsapp: '📱 WhatsApp',
+        telegram: '✈️ Telegram',
+        askWhatsapp: '📱 Geben Sie Ihre WhatsApp-Nummer ein (mit Ländervorwahl, z. B. +66...):',
+        askTelegram: '✈️ Geben Sie Ihren Telegram-@Benutzernamen ein:',
+        askAddress: '📍 Geben Sie Ihre Lieferadresse oder einen Google-Maps-Link ein:',
+        askPayment: '💳 Zahlungsart wählen:',
+        cash: '💵 Bargeld', card: '💳 Karte', crypto: '₿ Krypto',
+        askComment: '💬 Kommentar hinzufügen (oder „Überspringen“):',
+        skip: 'Überspringen ⏭',
+        summaryTitle: '🧾 <b>Bitte bestätigen Sie Ihre Bestellung:</b>',
+        name: 'Name', contact: 'Kontakt', address: 'Adresse', payment: 'Zahlung', comment: 'Kommentar', order: 'Bestellung',
+        confirm: '✅ Bestellung bestätigen',
+        cancel: '✖ Abbrechen',
+        cancelled: 'Bestellung abgebrochen. /start zum Neustart.',
+        thanks: '✅ <b>Danke!</b>\nIhre Bestellung ist eingegangen. Ein Manager meldet sich in Kürze bei Ihnen.',
+        startOver: 'Bitte nutzen Sie das Menü unten 👇',
+        qty: 'Menge',
+    },
+    zh: {
+        brand: '🛒 <b>Vapebaza</b> — 电子烟配送。18+',
+        chooseLang: '🌐 请选择语言：',
+        welcome: (r) => `欢迎！地区：<b>${r}</b>\n请问您想做什么？`,
+        chooseRegion: '📍 请选择您的地区：',
+        menuCatalog: '🛍 商品目录',
+        menuCart: '🛒 购物车',
+        menuRegion: '📍 更换地区',
+        menuLang: '🌐 语言',
+        catalogTitle: '🛍 <b>选择口味：</b>',
+        back: '⬅ 返回',
+        backCatalog: '⬅ 返回目录',
+        addToCart: '➕ 加入购物车',
+        added: '已加入购物车 ✓',
+        goToCart: '🛒 前往购物车',
+        cartTitle: '🛒 <b>您的购物车：</b>',
+        emptyCart: '🛒 您的购物车是空的。',
+        remove: '🗑',
+        delivery: '配送',
+        total: '合计',
+        checkout: '✅ 结算',
+        askName: '👤 请输入您的姓名：',
+        askContactMethod: '📱 我们如何与您联系？',
+        whatsapp: '📱 WhatsApp',
+        telegram: '✈️ Telegram',
+        askWhatsapp: '📱 请输入您的 WhatsApp 号码（含国家代码，例如 +66...）：',
+        askTelegram: '✈️ 请输入您的 Telegram @用户名：',
+        askAddress: '📍 请输入配送地址或 Google 地图位置链接：',
+        askPayment: '💳 请选择支付方式：',
+        cash: '💵 现金', card: '💳 银行卡', crypto: '₿ 加密货币',
+        askComment: '💬 添加备注（或点击"跳过"）：',
+        skip: '跳过 ⏭',
+        summaryTitle: '🧾 <b>请确认您的订单：</b>',
+        name: '姓名', contact: '联系方式', address: '地址', payment: '支付', comment: '备注', order: '订单',
+        confirm: '✅ 确认订单',
+        cancel: '✖ 取消',
+        cancelled: '订单已取消。/start 重新开始。',
+        thanks: '✅ <b>谢谢！</b>\n您的订单已收到。客服将尽快与您联系。',
+        startOver: '请使用下方菜单 👇',
+        qty: '数量',
+    },
 };
 
 function esc(s = '') {
@@ -109,10 +193,14 @@ async function tg(method, params) {
 const BOT_DESC = {
     en: '🛒 Vapebaza — vape delivery in Krabi (and more regions).\nOrder online and get your vape in about 1 hour — to your hotel, villa or apartment. Payment on delivery: cash, card or crypto.\n\nTap START to choose your region and flavors. 18+',
     ru: '🛒 Vapebaza — доставка вейпов в Краби (и другие регионы).\nЗакажите онлайн и получите вейп примерно за 1 час — в отель, на виллу или в квартиру. Оплата при получении: наличные, карта или крипто.\n\nНажмите СТАРТ, чтобы выбрать регион и вкусы. 18+',
+    de: '🛒 Vapebaza — Vape-Lieferung in Krabi (und weiteren Regionen).\nOnline bestellen und in etwa 1 Stunde erhalten — ins Hotel, zur Villa oder Wohnung. Zahlung bei Lieferung: Bargeld, Karte oder Krypto.\n\nTippen Sie auf START, um Region und Geschmack zu wählen. 18+',
+    zh: '🛒 Vapebaza — 甲米（及更多地区）电子烟配送。\n在线下单，约 1 小时送达酒店、别墅或公寓。货到付款：现金、银行卡或加密货币。\n\n点击 START 选择地区和口味。18+',
 };
 const BOT_SHORT = {
     en: 'Vape delivery 🛵 Order right here in the bot. 18+',
     ru: 'Доставка вейпов 🛵 Заказ прямо в боте. 18+',
+    de: 'Vape-Lieferung 🛵 Direkt im Bot bestellen. 18+',
+    zh: '电子烟配送 🛵 直接在机器人中下单。18+',
 };
 const BOT_CMDS = {
     en: [
@@ -125,10 +213,22 @@ const BOT_CMDS = {
         { command: 'menu', description: 'Главное меню' },
         { command: 'help', description: 'Как заказать' },
     ],
+    de: [
+        { command: 'start', description: 'Shop öffnen' },
+        { command: 'menu', description: 'Hauptmenü' },
+        { command: 'help', description: 'Bestellhilfe' },
+    ],
+    zh: [
+        { command: 'start', description: '打开商店' },
+        { command: 'menu', description: '主菜单' },
+        { command: 'help', description: '如何下单' },
+    ],
 };
 const HELP = {
     en: '🛍 <b>How to order</b>\n1) Choose language and region\n2) Open <b>Catalog</b> and add flavors to cart\n3) Open <b>Cart</b> → <b>Checkout</b>\n4) Enter your name, contact, address and payment\n5) Confirm — a manager will contact you shortly.\n\n/start — open the shop',
     ru: '🛍 <b>Как заказать</b>\n1) Выберите язык и регион\n2) Откройте <b>Каталог</b> и добавьте вкусы в корзину\n3) Откройте <b>Корзину</b> → <b>Оформить заказ</b>\n4) Укажите имя, контакт, адрес и оплату\n5) Подтвердите — менеджер свяжется с вами.\n\n/start — открыть магазин',
+    de: '🛍 <b>Wie bestellen</b>\n1) Sprache und Region wählen\n2) <b>Katalog</b> öffnen und Geschmack in den Warenkorb legen\n3) <b>Warenkorb</b> → <b>Zur Kasse</b>\n4) Name, Kontakt, Adresse und Zahlung angeben\n5) Bestätigen — ein Manager meldet sich in Kürze.\n\n/start — Shop öffnen',
+    zh: '🛍 <b>如何下单</b>\n1) 选择语言和地区\n2) 打开<b>商品目录</b>，将口味加入购物车\n3) 打开<b>购物车</b> → <b>结算</b>\n4) 填写姓名、联系方式、地址和支付方式\n5) 确认 — 客服将尽快与您联系。\n\n/start — 打开商店',
 };
 
 function isOperator(chatId) {
@@ -136,12 +236,15 @@ function isOperator(chatId) {
 }
 
 async function configureBot() {
+    // Default (English) + per-language versions
     await tg('setMyDescription', { description: BOT_DESC.en });
-    await tg('setMyDescription', { description: BOT_DESC.ru, language_code: 'ru' });
     await tg('setMyShortDescription', { short_description: BOT_SHORT.en });
-    await tg('setMyShortDescription', { short_description: BOT_SHORT.ru, language_code: 'ru' });
     await tg('setMyCommands', { commands: BOT_CMDS.en });
-    await tg('setMyCommands', { commands: BOT_CMDS.ru, language_code: 'ru' });
+    for (const lc of ['ru', 'de', 'zh']) {
+        await tg('setMyDescription', { description: BOT_DESC[lc], language_code: lc });
+        await tg('setMyShortDescription', { short_description: BOT_SHORT[lc], language_code: lc });
+        await tg('setMyCommands', { commands: BOT_CMDS[lc], language_code: lc });
+    }
     await tg('setChatMenuButton', { menu_button: { type: 'commands' } });
 }
 
@@ -192,23 +295,23 @@ function mainMenuKb(t) {
 }
 
 async function showLangChoice(chatId) {
-    const welcome =
-        '🛒 <b>Vapebaza</b> — vape delivery / доставка вейпов\n' +
-        'Fast delivery to your hotel, villa or apartment. 18+\n' +
-        'Быстрая доставка в отель, на виллу или в квартиру. 18+\n\n' +
-        `${T.en.chooseLang}\n${T.ru.chooseLang}`;
+    const text = '🌐 Choose language / Выберите язык / Sprache wählen / 选择语言:';
     await tg('sendMessage', {
         chat_id: chatId,
-        text: welcome,
-        parse_mode: 'HTML',
-        reply_markup: { inline_keyboard: [[{ text: 'English 🇬🇧', callback_data: 'lang:en' }, { text: 'Русский 🇷🇺', callback_data: 'lang:ru' }]] },
+        text,
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: 'English 🇬🇧', callback_data: 'lang:en' }, { text: 'Русский 🇷🇺', callback_data: 'lang:ru' }],
+                [{ text: 'Deutsch 🇩🇪', callback_data: 'lang:de' }, { text: '中文 🇨🇳', callback_data: 'lang:zh' }],
+            ],
+        },
     });
 }
 
 async function showRegionChoice(chatId, lang) {
-    const t = T[lang];
+    const t = T[lang] || T.en;
     const rows = regionList().map((r) => [{ text: r.name[lang] || r.name.en, callback_data: `region:${r.id}` }]);
-    await tg('sendMessage', { chat_id: chatId, text: t.chooseRegion, reply_markup: { inline_keyboard: rows } });
+    await tg('sendMessage', { chat_id: chatId, text: `${t.brand}\n\n${t.chooseRegion}`, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } });
 }
 
 async function showMenu(chatId, state, edit, msgId) {
@@ -412,7 +515,7 @@ async function onMessage(msg) {
 
     if (text === '/start' || text === '/menu') {
         state.step = null;
-        if (!state.lang) { await saveState(chatId, state); return showLangChoice(chatId); }
+        if (!state.lang) state.lang = 'en'; // default language
         if (!state.region) { await saveState(chatId, state); return showRegionChoice(chatId, state.lang); }
         await saveState(chatId, state);
         return showMenu(chatId, state);
@@ -451,11 +554,11 @@ async function onMessage(msg) {
     }
 
     // Fallback
-    if (state.lang && state.region) {
-        const t = T[state.lang];
-        return tg('sendMessage', { chat_id: chatId, text: t.startOver, reply_markup: mainMenuKb(t) });
-    }
-    return showLangChoice(chatId);
+    if (!state.lang) state.lang = 'en';
+    await saveState(chatId, state);
+    if (!state.region) return showRegionChoice(chatId, state.lang);
+    const t = T[state.lang];
+    return tg('sendMessage', { chat_id: chatId, text: t.startOver, reply_markup: mainMenuKb(t) });
 }
 
 async function onCallback(cq) {
@@ -467,7 +570,8 @@ async function onCallback(cq) {
 
     // language / region selection
     if (data.startsWith('lang:')) {
-        state.lang = data.split(':')[1] === 'ru' ? 'ru' : 'en';
+        const L = data.split(':')[1];
+        state.lang = ['en', 'ru', 'de', 'zh'].includes(L) ? L : 'en';
         await saveState(chatId, state);
         await ack();
         if (!state.region) return showRegionChoice(chatId, state.lang);
@@ -483,7 +587,8 @@ async function onCallback(cq) {
     }
     if (data === 'changeregion') { await ack(); return showRegionChoice(chatId, state.lang || 'en'); }
 
-    if (!state.lang || !state.region) { await ack(); return showLangChoice(chatId); }
+    if (!state.lang) { state.lang = 'en'; await saveState(chatId, state); }
+    if (!state.region) { await ack(); return showRegionChoice(chatId, state.lang); }
     const t = T[state.lang];
 
     if (data === 'menu') { await ack(); return showMenu(chatId, state, true, msgId); }
@@ -536,6 +641,8 @@ async function onCallback(cq) {
         const PAY = {
             en: { cash: 'Cash', card: 'Card', crypto: 'Crypto' },
             ru: { cash: 'Наличные', card: 'Карта', crypto: 'Крипто' },
+            de: { cash: 'Bargeld', card: 'Karte', crypto: 'Krypto' },
+            zh: { cash: '现金', card: '银行卡', crypto: '加密货币' },
         };
         state.draft.payment = (PAY[state.lang] || PAY.en)[m] || m;
         state.step = 'comment';
