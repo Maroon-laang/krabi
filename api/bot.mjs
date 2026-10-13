@@ -266,6 +266,20 @@ async function saveState(chatId, state) {
 }
 
 // ---------- cart helpers ----------
+function productFullName(region, p, lang) {
+    const flavor = p.name[lang] || p.name.en;
+    const g = p.group && region.groups && region.groups[p.group];
+    if (g) {
+        const gname = g.name[lang] || g.name.en;
+        return `${gname} ${flavor}`;
+    }
+    return flavor;
+}
+
+function productImage(p) {
+    return p.imgUrl || (p.img ? `${SITE_URL}/images/${p.img}` : null);
+}
+
 function cartLines(region, cart, lang) {
     const lines = [];
     let subtotal = 0;
@@ -274,7 +288,7 @@ function cartLines(region, cart, lang) {
         if (!p || qty <= 0) continue;
         const sum = p.price * qty;
         subtotal += sum;
-        lines.push({ id: p.id, name: p.name[lang] || p.name.en, qty, price: p.price, sum });
+        lines.push({ id: p.id, name: productFullName(region, p, lang), qty, price: p.price, sum });
     }
     const delivery = lines.length ? region.delivery : 0;
     return { lines, subtotal, delivery, total: subtotal + delivery };
@@ -328,12 +342,37 @@ async function showMenu(chatId, state, edit, msgId) {
 async function showCatalog(chatId, state, msgId) {
     const t = T[state.lang];
     const region = getRegion(state.region);
-    const rows = region.products.map((p) => [{
+    let rows;
+    if (region.groups) {
+        rows = Object.entries(region.groups).map(([gid, g]) => [{
+            text: g.name[state.lang] || g.name.en,
+            callback_data: `grp:${gid}`,
+        }]);
+    } else {
+        rows = region.products.map((p) => [{
+            text: `${productFullName(region, p, state.lang)} — ${p.price} ${region.currency}`,
+            callback_data: `prod:${p.id}`,
+        }]);
+    }
+    rows.push([{ text: `${t.menuCart} (${cartCount(state.cart)})`, callback_data: 'cart' }, { text: t.back, callback_data: 'menu' }]);
+    const params = { chat_id: chatId, text: t.catalogTitle, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } };
+    if (msgId) {
+        const r = await tg('editMessageText', { ...params, message_id: msgId });
+        if (!r.ok) await tg('sendMessage', params);
+    } else await tg('sendMessage', params);
+}
+
+async function showGroup(chatId, state, gid, msgId) {
+    const t = T[state.lang];
+    const region = getRegion(state.region);
+    const g = region.groups && region.groups[gid];
+    if (!g) return showCatalog(chatId, state, msgId);
+    const rows = region.products.filter((p) => p.group === gid).map((p) => [{
         text: `${p.name[state.lang] || p.name.en} — ${p.price} ${region.currency}`,
         callback_data: `prod:${p.id}`,
     }]);
-    rows.push([{ text: `${t.menuCart} (${cartCount(state.cart)})`, callback_data: 'cart' }, { text: t.back, callback_data: 'menu' }]);
-    const params = { chat_id: chatId, text: t.catalogTitle, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } };
+    rows.push([{ text: `${t.menuCart} (${cartCount(state.cart)})`, callback_data: 'cart' }, { text: t.backCatalog, callback_data: 'catalog' }]);
+    const params = { chat_id: chatId, text: `🛍 <b>${esc(g.name[state.lang] || g.name.en)}</b>`, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } };
     if (msgId) {
         const r = await tg('editMessageText', { ...params, message_id: msgId });
         if (!r.ok) await tg('sendMessage', params);
@@ -345,14 +384,19 @@ async function showProduct(chatId, state, pid) {
     const region = getRegion(state.region);
     const p = getProduct(region.id, pid);
     if (!p) return;
-    const caption = `<b>${esc(p.name[state.lang] || p.name.en)}</b>\n${esc(p.desc[state.lang] || p.desc.en)}\n\n💰 <b>${p.price} ${region.currency}</b>`;
+    const fullName = productFullName(region, p, state.lang);
+    const desc = p.desc ? (p.desc[state.lang] || p.desc.en || '') : '';
+    const caption = `<b>${esc(fullName)}</b>${desc ? '\n' + esc(desc) : ''}\n\n💰 <b>${p.price} ${region.currency}</b>`;
+    const backData = (p.group && region.groups) ? `grp:${p.group}` : 'catalog';
     const kb = {
         inline_keyboard: [
             [{ text: t.addToCart, callback_data: `add:${p.id}` }],
-            [{ text: t.goToCart, callback_data: 'cart' }, { text: t.backCatalog, callback_data: 'catalog' }],
+            [{ text: t.goToCart, callback_data: 'cart' }, { text: t.backCatalog, callback_data: backData }],
         ],
     };
-    await tg('sendPhoto', { chat_id: chatId, photo: `${SITE_URL}/images/${p.img}`, caption, parse_mode: 'HTML', reply_markup: kb });
+    const photo = productImage(p);
+    if (photo) await tg('sendPhoto', { chat_id: chatId, photo, caption, parse_mode: 'HTML', reply_markup: kb });
+    else await tg('sendMessage', { chat_id: chatId, text: caption, parse_mode: 'HTML', reply_markup: kb });
 }
 
 function cartText(state) {
@@ -581,7 +625,11 @@ async function onCallback(cq) {
 
     if (data.startsWith('region:')) {
         const rid = data.split(':')[1];
-        if (getRegion(rid)) { state.region = rid; await saveState(chatId, state); }
+        if (getRegion(rid)) {
+            if (state.region !== rid) state.cart = {}; // avoid mixing product ids across regions
+            state.region = rid;
+            await saveState(chatId, state);
+        }
         await ack();
         return showMenu(chatId, state);
     }
@@ -595,6 +643,7 @@ async function onCallback(cq) {
     if (data === 'catalog') { await ack(); return showCatalog(chatId, state, msgId); }
     if (data === 'noop') { return ack(); }
 
+    if (data.startsWith('grp:')) { await ack(); return showGroup(chatId, state, data.split(':')[1], msgId); }
     if (data.startsWith('prod:')) { await ack(); return showProduct(chatId, state, data.split(':')[1]); }
 
     if (data.startsWith('add:')) {
