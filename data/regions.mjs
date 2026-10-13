@@ -45,6 +45,7 @@ export const regions = {
             infy: { name: { en: 'INFY 20000' } },
             lumi3: { name: { en: 'RELX Lumi 18000 · NIC 3%' } },
             lumi5: { name: { en: 'RELX Lumi 18000 · NIC 5%' } },
+            marbo: { name: { en: 'Marbo Bar 10K', ru: 'Marbo Bar 10K' } },
         },
         products: [
             { id: 1, group: 'mbar', price: 1100, name: { en: 'Peach strawberry' }, imgUrl: 'https://static.tildacdn.one/stor3333-3632-4766-b230-323865353438/ff918fbd95a1d23e02aa6493f53add6c.png' },
@@ -145,6 +146,18 @@ export const regions = {
             { id: 92, group: 'lumi5', price: 1400, img: 'lumi.jpg', name: { en: 'Grape' } },
             { id: 93, group: 'lumi5', price: 1400, img: 'lumi.jpg', name: { en: 'Watermelon' } },
             { id: 94, group: 'lumi5', price: 1400, img: 'lumi.jpg', name: { en: 'Double Mint' } },
+
+            { id: 95, group: 'marbo', price: 1400, img: 'blue-ice.jpg', name: { en: 'Blue Ice', ru: 'Личи' } },
+            { id: 96, group: 'marbo', price: 1400, img: 'menthol-blast.jpg', name: { en: 'Menthol Blast', ru: 'Ментоловый леденец' } },
+            { id: 97, group: 'marbo', price: 1400, img: 'yellow-mint.jpg', name: { en: 'Yellow Mint', ru: 'Мята' } },
+            { id: 98, group: 'marbo', price: 1400, img: 'grape.jpg', name: { en: 'Grape', ru: 'Виноград' } },
+            { id: 99, group: 'marbo', price: 1400, img: 'kyoho-grape.jpg', name: { en: 'Kyoho Grape', ru: 'Зелёный виноград' } },
+            { id: 100, group: 'marbo', price: 1400, img: 'watermelon.jpg', name: { en: 'Watermelon', ru: 'Арбуз' } },
+            { id: 101, group: 'marbo', price: 1400, img: 'watermelon-mint.jpg', name: { en: 'Watermelon Mint', ru: 'Арбуз с мятой' } },
+            { id: 102, group: 'marbo', price: 1400, img: 'strawberry-kiwi.jpg', name: { en: 'Strawberry Kiwi', ru: 'Клубника-киви' } },
+            { id: 103, group: 'marbo', price: 1400, img: 'cola.jpg', name: { en: 'Cola', ru: 'Кола' } },
+            { id: 104, group: 'marbo', price: 1400, img: 'pink-berry.jpg', name: { en: 'Pink Berry', ru: 'Розовые ягоды' } },
+            { id: 105, group: 'marbo', price: 1400, img: 'all-berry.jpg', name: { en: 'All Berry', ru: 'Ассорти ягод' } },
         ],
     },
 };

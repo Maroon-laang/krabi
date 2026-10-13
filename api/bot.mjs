@@ -8,6 +8,7 @@ import { regions, regionList, getRegion, getProduct, SITE_URL } from '../data/re
 
 const TOKEN = process.env.CLIENT_BOT_TOKEN;
 const API = TOKEN ? `https://api.telegram.org/bot${TOKEN}` : null;
+const DEFAULT_REGION = 'phuket'; // primary region for new users
 
 const T = {
     en: {
@@ -324,7 +325,8 @@ async function showLangChoice(chatId) {
 
 async function showRegionChoice(chatId, lang) {
     const t = T[lang] || T.en;
-    const rows = regionList().map((r) => [{ text: r.name[lang] || r.name.en, callback_data: `region:${r.id}` }]);
+    const ordered = [...regionList()].sort((a, b) => (a.id === DEFAULT_REGION ? -1 : b.id === DEFAULT_REGION ? 1 : 0));
+    const rows = ordered.map((r) => [{ text: r.name[lang] || r.name.en, callback_data: `region:${r.id}` }]);
     await tg('sendMessage', { chat_id: chatId, text: `${t.brand}\n\n${t.chooseRegion}`, parse_mode: 'HTML', reply_markup: { inline_keyboard: rows } });
 }
 
@@ -560,7 +562,7 @@ async function onMessage(msg) {
     if (text === '/start' || text === '/menu') {
         state.step = null;
         if (!state.lang) state.lang = 'en'; // default language
-        if (!state.region) { await saveState(chatId, state); return showRegionChoice(chatId, state.lang); }
+        if (!state.region) state.region = DEFAULT_REGION; // default region
         await saveState(chatId, state);
         return showMenu(chatId, state);
     }
@@ -599,8 +601,8 @@ async function onMessage(msg) {
 
     // Fallback
     if (!state.lang) state.lang = 'en';
+    if (!state.region) state.region = DEFAULT_REGION;
     await saveState(chatId, state);
-    if (!state.region) return showRegionChoice(chatId, state.lang);
     const t = T[state.lang];
     return tg('sendMessage', { chat_id: chatId, text: t.startOver, reply_markup: mainMenuKb(t) });
 }
@@ -635,8 +637,9 @@ async function onCallback(cq) {
     }
     if (data === 'changeregion') { await ack(); return showRegionChoice(chatId, state.lang || 'en'); }
 
-    if (!state.lang) { state.lang = 'en'; await saveState(chatId, state); }
-    if (!state.region) { await ack(); return showRegionChoice(chatId, state.lang); }
+    if (!state.lang) state.lang = 'en';
+    if (!state.region) state.region = DEFAULT_REGION;
+    await saveState(chatId, state);
     const t = T[state.lang];
 
     if (data === 'menu') { await ack(); return showMenu(chatId, state, true, msgId); }
