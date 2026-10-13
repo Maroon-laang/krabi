@@ -3,7 +3,7 @@
 // Vercel Environment Variables (BOT_TOKEN, CHAT_ID).
 // If a storage integration is connected, orders are also saved for the admin panel.
 
-import { redis, redisConfigured } from '../lib/redis.mjs';
+import { saveOrder } from '../lib/orders.mjs';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     }
 
     // Save to storage for the admin panel (best-effort — never blocks the order).
-    await saveOrder(order).catch((err) => console.error('saveOrder failed:', err));
+    await saveOrder({ ...order, source: 'site', region: 'krabi' }).catch((err) => console.error('saveOrder failed:', err));
 
     try {
         const tgResp = await fetch(
@@ -48,27 +48,6 @@ export default async function handler(req, res) {
         console.error('Proxy error:', e);
         return res.status(502).json({ ok: false, error: 'Upstream request failed' });
     }
-}
-
-async function saveOrder(o) {
-    if (!redisConfigured()) return;
-    const ts = Date.now();
-    const id = `${ts}-${Math.random().toString(36).slice(2, 7)}`;
-    const record = {
-        id,
-        ts,
-        name: String(o.name || ''),
-        contact: String(o.contact || ''),
-        contactLabel: String(o.contactLabel || ''),
-        address: String(o.address || ''),
-        payment: String(o.payment || ''),
-        comment: String(o.comment || ''),
-        items: Array.isArray(o.items) ? o.items : [],
-        total: Number(o.total) || 0,
-        status: 'new',
-    };
-    await redis(['SET', `order:${id}`, JSON.stringify(record)]);
-    await redis(['ZADD', 'orders', String(ts), id]);
 }
 
 function esc(s = '') {

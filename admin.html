@@ -475,7 +475,7 @@
                 return `
                 <div class="order ${status}">
                     <div class="order-head">
-                        <span class="order-date">${esc(fmtDate(o.ts))}</span>
+                        <span class="order-date">${esc(fmtDate(o.ts))}${o.region ? ' · ' + esc(o.region) : ''}${o.source ? ' · ' + (o.source === 'bot' ? '🤖 бот' : '🌐 сайт') : ''}</span>
                         <span class="badge ${status}">${status === 'handled' ? 'Обработана' : 'Новая'}</span>
                     </div>
                     <div class="order-name">${esc(o.name) || '—'}</div>
